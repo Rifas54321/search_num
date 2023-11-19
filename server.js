@@ -1,7 +1,7 @@
 const truesearch = require("truesearch");
 const input = require("readline-sync");
 const phoneNumber = "";
-const bot_token = "6507681162:AAGaoadFk7_24D2TD7MItN7yawuxOkKMe3A";
+const bot_token = "6417305861:AAEKBEMC0t0hqwaZ8qJIac27UsevKYakd9g";
 const Telegram = require("node-telegram-bot-api");
 const bot = new Telegram(bot_token,{polling:true})
 const tc_token = 'a1i0F--jBP0iyVcVMQ_jzaI-bSOnfJ11onu5S_DF3h61cH4TmNaVeIBTD71v9Yd7'
