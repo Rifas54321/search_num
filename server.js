@@ -22,7 +22,7 @@ bot.on("message",async(msg)=>{
      tmp.push(msg1)
      console.log(tmp)
     let res = await truesearch(tmp[0],tc_token).then(data=>{
-      console.log(data)
+      //console.log(data)
       let motd =`ℕ𝕒𝕞𝕖 :    ${data.name}\n
 𝕔𝕚𝕥𝕪 :    ${data.addresses[0].city}\n
 𝕔𝕠𝕦𝕟𝕥𝕣𝕪 𝕔𝕠𝕕𝕖 :    ${data.addresses[0].countryCode}\n
@@ -41,7 +41,9 @@ bot.sendMessage(chatId,motd)
       
     
      
-    })
+    }).catch(err)=>{
+      bot.sendMessage(chatId,"sorry! error occured")
+    }
     }
     main();
       }catch(err){
