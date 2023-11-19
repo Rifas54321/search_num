@@ -41,9 +41,7 @@ bot.sendMessage(chatId,motd)
       
     
      
-    }).catch(err)=>{
-      bot.sendMessage(chatId,"sorry! error occured")
-    }
+    }).catch(err=>{bot.sendMessage(chatId,"sorry! error occured")})
     }
     main();
       }catch(err){
