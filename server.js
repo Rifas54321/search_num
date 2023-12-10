@@ -1,108 +1,70 @@
-const truesearch = require("truesearch");
-const input = require("readline-sync");
-const phoneNumber = "";
-const bot_token = "6417305861:AAEKBEMC0t0hqwaZ8qJIac27UsevKYakd9g";
-const Telegram = require("node-telegram-bot-api");
-const bot = new Telegram(bot_token,{polling:true})
-const tc_token = 'a1i0F--jBP0iyVcVMQ_jzaI-bSOnfJ11onu5S_DF3h61cH4TmNaVeIBTD71v9Yd7'
-var tmp = [];
+const bot_token = "6507681162:AAGaoadFk7_24D2TD7MItN7yawuxOkKMe3A";
+const exec = require("child_process").exec
+const tc_token =
+'a1i0F--jBP0iyVcVMQ_jzaI-bSOnfJ11onu5S_DF3h61cH4TmNaVeIBTD71v9Yd7'
+const telegram = require("node-telegram-bot-api")
+const bot = new telegram(bot_token,{polling:true});
+let arr = []
 bot.on("message",async(msg)=>{
-  const chatId = msg.chat.id;
-  let mesg = await msg.text;
-  if(mesg.startsWith("+")){
-    if(mesg.length <10){
-      bot.sendMessage(chatId,"𝕤𝕠𝕣𝕣𝕪! 𝕡𝕝𝕖𝕒𝕤𝕖 𝕤𝕖𝕟𝕕 𝕧𝕒𝕝𝕚𝕕 𝕟𝕦𝕞𝕓𝕖𝕣")
-    }else{
-      try{
-    async function main(){
-      console.log("we are here")
-      //const res = await truesearch(mesg,tc_token)
-     // bot.sendMessage(chatId,res)
-     const msg1 = mesg;
-     tmp.push(msg1)
-     console.log(tmp)
-    let res = await truesearch(tmp[0],tc_token).then(data=>{
-      //console.log(data)
-      let motd =`ℕ𝕒𝕞𝕖 :    ${data.name}\n
-𝕔𝕚𝕥𝕪 :    ${data.addresses[0].city}\n
-𝕔𝕠𝕦𝕟𝕥𝕣𝕪 𝕔𝕠𝕕𝕖 :    ${data.addresses[0].countryCode}\n
-𝕥𝕚𝕞𝕖 :    ${data.addresses[0].timeZone}\n
-𝕖𝕞𝕒𝕚𝕝:   ${data.email}\n
-𝕔𝕠𝕦𝕟𝕥𝕣𝕪 :    ${data.countryDetails.name}\n
-𝕟𝕒𝕥𝕚𝕧𝕖 𝕝𝕒𝕟𝕘 :    ${data.countryDetails.native}\n
-𝕡𝕙𝕠𝕟𝕖 𝕔𝕠𝕕𝕖 :    ${data.countryDetails.phone}\n 
-𝕔𝕠𝕟𝕥𝕚𝕟𝕖𝕟𝕥 :    ${data.countryDetails.continent}\n 
-𝕔𝕒𝕡𝕚𝕥𝕒𝕝 :    ${data.countryDetails.capital}\n 
-𝕔𝕦𝕣𝕣𝕖𝕟𝕔𝕪 :    ${data.countryDetails.currency}\n 
-𝕝𝕒𝕟𝕘𝕦𝕒𝕘𝕖𝕤 :    ${data.countryDetails.languages}\n 
-𝕗𝕝𝕒𝕘 :    ${data.countryDetails.flag}
-`
-bot.sendMessage(chatId,motd)
-      
-    
-     
-    }).catch(err=>{bot.sendMessage(chatId,"sorry! error occured")})
-    }
-    main();
-      }catch(err){
-        if(err){
-          console.log(err)
-          bot.sendMessage(chatId,"an error occured")
-        }
-      }
-    
-    
-    
-    
-    }
-  }
-  if(msg.text =="/start"){
-    bot.sendChatAction(chatId,"typing")
-    message = `
-ℍ𝕖𝕝𝕝𝕠! @${msg.chat.username}
-𝕋𝕙𝕚𝕤 𝕓𝕠𝕥 𝕚𝕤 𝕦𝕤𝕖 𝕥𝕠 𝕗𝕚𝕟𝕕 𝕞𝕠𝕓𝕚𝕝𝕖 𝕟𝕦𝕞𝕓𝕖𝕣 𝕕𝕖𝕥𝕒𝕚𝕝𝕤\n
-𝕓𝕠𝕥 𝕚𝕤 𝕔𝕣𝕖𝕒𝕥𝕖𝕕 𝕓𝕪 @rifas11\n
-/search 𝕔𝕠𝕞𝕞𝕒𝕟𝕕 𝕦𝕤𝕖 𝕥𝕠 𝕤𝕖𝕒𝕣𝕔𝕙 𝕟𝕦𝕞𝕓𝕖𝕣 𝕕𝕖𝕥𝕒𝕚𝕝𝕤
-`
-    bot.sendMessage(chatId,message)
-    
-  }
-  if(msg.text=="/search"){
-   const opt = {
-     reply_markup :{
-       inline_keyboard :
-         [[{text:"search",callback_data:"search_num"}]]
-     }
-   }
-    
-    const motd = `
+  let chatId = msg.chat.id
+  if(msg.text.startsWith("+") && msg.text.length > 12){
+    arr.push(msg.text)
+    let res = arr[arr.length-1]
+    console.log(res)
+    let dat = search(res,chatId)
+    //bot.sendMessage(chatId,dat)
+  }else if(msg.text == "About"){
+    bot.sendMessage(chatId,"@rifas11")
+  }else if(msg.text == "/start"){
+    let txt  = `
        ℍ𝕚! @${msg.chat.username}
 𝕥𝕙𝕚𝕤 𝕓𝕠𝕥 𝕚𝕤 𝕦𝕤𝕖𝕕 𝕥𝕠 𝕝𝕠𝕠𝕜𝕦𝕡 𝕟𝕦𝕞𝕓𝕖𝕣𝕤
-𝕔𝕣𝕖𝕒𝕥𝕖𝕕 𝕓𝕪 @𝕣𝕚𝕗𝕒𝕤𝟙𝟙`
-    bot.sendMessage(chatId,motd,opt)
-    bot.sendChatAction(chatId,"typing")
+𝕔𝕣𝕖𝕒𝕥𝕖𝕕 𝕓𝕪 @rifas11`
+    bot.sendMessage(chatId,txt)
+  }else{
+    var not_found= 
+`
+𝙋𝙇𝙀𝘼𝙎𝙀 𝙀𝙉𝙏𝙀𝙍 𝙉𝙐𝙈𝘽𝙀𝙍 𝙄𝙉 𝙁𝙐𝙇𝙇 𝙄𝙉𝙏𝙀𝙍𝙉𝘼𝙏𝙄𝙊𝙉𝘼𝙇 𝙁𝙊𝙍𝙈𝘼𝙏\n
+𝙚𝙜 :-  +9190𝙓𝙓𝙓𝙓𝙓𝙓21
+`
+    bot.sendMessage(chatId,not_found)
   }
-  bot.on("callback_query",async(msg)=>{
-    action = msg.data;
-    cid = msg.from.id;
-    if(action=="search_num"){
-      search_num(msg)
-    }
-  })
-  async function search_num(msg){
-    key = {
-      reply_markup:{
-        force_reply:true
-      }
-      }
-let motd =`
-      𝕊𝕖𝕟𝕕 𝕡𝕙𝕠𝕟𝕖 𝕟𝕠 𝕚𝕟 𝕚𝕟𝕥𝕖𝕣𝕟𝕒𝕥𝕚𝕠𝕟 𝕗𝕠𝕣𝕞𝕒𝕥
-𝕖𝕘 : "+𝟡𝟙𝟡𝟘𝕏𝕏𝕏𝕏𝕏𝕏𝟚𝟙`
-  bot.sendMessage(msg.from.id,motd,key)
-  
-    
-  }
-
-
-
 })
+async function search(num,chatId){
+  exec(`truecallerjs -s ${num} --json`,async(a,b,c)=>{
+    try{
+    let res = await JSON.parse(b)
+    let data = await res.data[0]
+    if(data == undefined){
+      bot.sendMessage(chatId,"𝙉𝙤 𝙙𝙚𝙩𝙖𝙞𝙡𝙨 𝙛𝙤𝙪𝙣𝙙 𝙘𝙝𝙚𝙘𝙠 𝙣𝙪𝙢𝙗𝙚𝙧 𝙖𝙣𝙙 𝙩𝙧𝙮 𝙖𝙜𝙖𝙞𝙣")
+    }else{
+      let email = "not found";
+    try{
+      if(data.internetAddresses[0].id == undefined ){
+        email = email;
+     }else{
+       email = data.internetAddresses[0].id
+     }
+    }catch{
+      console.log("no emails found")
+    }
+    
+    
+      val = `𝙉𝙖𝙢𝙚 :    ${data.name}\n
+𝙀𝙢𝙖𝙞𝙡 : ${email}\n
+𝘾𝙤𝙪𝙣𝙩𝙧𝙮 : ${data.phones[0].countryCode}\n
+𝘾𝙖𝙧𝙧𝙞𝙚𝙧 : ${data.phones[0].carrier}\n
+𝘾𝙞𝙩𝙮 : ${data.addresses[0].city}\n 
+𝙏𝙞𝙢𝙚 𝙕𝙤𝙣𝙚 : ${data.addresses[0].timeZone}\n 
+𝘿𝙞𝙖𝙡𝙞𝙣𝙜 𝙘𝙤𝙙𝙚 : +${data.phones[0].dialingCode}\n
+
+`
+bot.sendMessage(chatId,val)
+    }
+  }catch(e){
+    bot.sendMessage(chatId,"𝙉𝙤 𝙙𝙚𝙩𝙖𝙞𝙡𝙨 𝙛𝙤𝙪𝙣𝙙 𝙘𝙝𝙚𝙘𝙠 𝙣𝙪𝙢𝙗𝙚𝙧 𝙖𝙣𝙙 𝙩𝙧𝙮 𝙖𝙜𝙖𝙞𝙣")
+  }
+  }
+  
+  )
+}
